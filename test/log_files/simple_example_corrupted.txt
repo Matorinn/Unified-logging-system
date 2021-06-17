@@ -1,0 +1,5 @@
+Application launch
+ABCDEFGH
+This is a error message
+This is a log message
+Termination of the application
