@@ -1,0 +1,9 @@
+branch: testing
+language: c
+compiler: gcc
+os: linux
+
+script:
+  - make
+  - make test
+  - ./test.exe
