@@ -1,8 +1,15 @@
 .PHONY: clean start all 
 
-all: zlog_with_signal.exe
+all: example.exe
 
-zlog_with_signal.exe: zlog_with_signal.o 
+example.exe: example.o signal_for_zlog.o
 	gcc -o $@ $^ -L/usr/local/lib -lzlog -lpthread
-zlog_with_signal.o: zlog_with_signal.c 
+example.o: example.c 
 	gcc -Wall -c -o $@ $< -I/usr/local/include
+
+signal_for_zlog.o: signal_for_zlog.c
+	gcc -Wall -c -o $@ $< -I/usr/local/include
+
+
+clean:
+	rm -rf *.o *.exe
