@@ -3,10 +3,10 @@
 
 #include <signal.h> /* для работы с сигналами */
 
-int rc; /* переменная для открытия конфиг-файла */
+int rc;            /* переменная для открытия конфиг-файла */
 char *config_name; /* имя конфиг-файла*/
 
-int signal_binding();
-void signal_handler(int);
+void signal_handler(int signal_number);
+int signal_binding(struct sigaction *sa);
 
 #endif

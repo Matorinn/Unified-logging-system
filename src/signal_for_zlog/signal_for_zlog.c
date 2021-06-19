@@ -1,25 +1,28 @@
-#include <stdio.h>
-#include <string.h> /* для memset() */
-#include <stdlib.h> /* для exit() */
-#include "zlog.h" /* для zlog_reload() */
 #include "signal_for_zlog.h" /* для глобальных перенных */
+#include "zlog.h"            /* для zlog_reload() */
+#include <stdio.h>
+#include <stdlib.h> /* для exit() */
+#include <string.h> /* для memset() */
 
 /* 
- * обработчик сигнала SIGUSR2, в котором меняется 
+ * обработчик сигнала SIGHUP, в котором меняется 
  * конфигурация логирования 
  */
-void signal_handler(int signal_number) {
-	rc = zlog_reload(config_name);
-	if (rc) {
-		fprintf(stderr, "error in zlog_reload()\n");
-		exit(EXIT_FAILURE);
-	}
+void signal_handler(int signal_number)
+{
+    rc = zlog_reload(config_name);
+    if (rc) {
+        fprintf(stderr, "error in zlog_reload()\n");
+        exit(EXIT_FAILURE);
+    }
 }
 
-/* связывание сигнала SIGUSR2 с нашим обработчиком */
-int signal_binding(struct sigaction *sa) {
-	memset(*&sa, 0, sizeof(*sa));
-	(*sa).sa_handler = &signal_handler;
-	sigaction(SIGUSR2, *&sa, NULL);
+/* связывание сигнала SIGHUP с нашим обработчиком */
+int signal_binding(struct sigaction *sa)
+{
+    (*sa).sa_handler = &signal_handler;
+    sigemptyset(&sa->sa_mask);
+    sa->sa_flags = SA_SIGINFO;
+    sigaction(SIGHUP, *&sa, NULL);
 	return 0;
 }
