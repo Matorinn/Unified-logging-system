@@ -13,7 +13,8 @@ int main(int argc, char** argv)
 	printf("config_name == %s\n", config_name); 
 
 	/* связывание сигнала SIGUSR2 с нашим обработчиком */
-	signal_binding();
+	struct sigaction sa; /* структура для сигнала */
+	signal_binding(&sa);
 
 	/* информация о том, как передать SIGUSR2 */
 	printf("SIGUSR2 == %d\n", SIGUSR2);

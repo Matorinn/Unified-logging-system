@@ -17,9 +17,9 @@ void signal_handler(int signal_number) {
 }
 
 /* связывание сигнала SIGUSR2 с нашим обработчиком */
-int signal_binding() {
-	memset(&sa, 0, sizeof(sa));
-	sa.sa_handler = &signal_handler;
-	sigaction(SIGUSR2, &sa, NULL);
+int signal_binding(struct sigaction *sa) {
+	memset(*&sa, 0, sizeof(*sa));
+	(*sa).sa_handler = &signal_handler;
+	sigaction(SIGUSR2, *&sa, NULL);
 	return 0;
 }
