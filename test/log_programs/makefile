@@ -1,11 +1,20 @@
 .PHONY: clean start all 
 
-all: simple_example.exe
+EXE = simple_example.exe \
+	zlog_01_simple.exe \
+	zlog_02_categories.exe \
+	zlog_03_formats.exe
+
+all: $(EXE)
 
 #создание исполняемого файла:
-simple_example.exe: simple_example.o 
-	gcc -o $@ $^
+%.exe: %.o
+	gcc -o $@ $^ -L/usr/local/lib -lzlog -lpthread
 #создание объектного файла:
-simple_example.o: simple_example.c 
-	gcc -Wall -c -o $@ $<
+%.o: %.c
+	gcc -Wall -c -o $@ $< -I/usr/local/include
 
+# '%' означает одинаковые имена
+
+clean:
+	rm -rf *.o *.exe
