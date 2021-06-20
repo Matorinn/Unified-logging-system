@@ -72,7 +72,7 @@ int compare_logfiles5(const char *filename1, /* 1-ый лог-файл */
 
         char *ret_fgets1 = fgets(string1, string_len, fp1);
         char *ret_fgets2 = fgets(string2, string_len, fp2);
-        printf("\n%s%s", string1, string2);
+        //printf("\n%s%s", string1, string2);
 
         /* если конец файлов */
         if (ret_fgets1 == NULL && ret_fgets2 == NULL) {
@@ -86,7 +86,7 @@ int compare_logfiles5(const char *filename1, /* 1-ый лог-файл */
             if (string1[i] == start_symbol)
                 break;
         }
-        printf("\n%s%s", string1 + i - offset, string2 + i - offset);
+        //printf("\n%s%s", string1 + i - offset, string2 + i - offset);
 
         /* если подстроки не совпадают, вернуть 1 */
         if (strcmp(string1 + i - offset, string2 + i - offset)) {
@@ -139,7 +139,18 @@ CTEST(zlog_suite, 01_simple)
     const char fileToCompare[] = "test/log_files/zlog_01_simple.log";
     const char fileCorrect[] = "test/log_correct/zlog_01_simple.log";
 
-    const int result = compare_logfiles5(fileToCompare, fileCorrect, 256, '_', 2);
+    const int result = compare_logfiles5(fileToCompare, fileCorrect, 256, '_', 4);
+
+    const int expected = 0;
+    ASSERT_EQUAL(expected, result);
+}
+
+CTEST(zlog_suite, 02_categories)
+{
+    const char fileToCompare[] = "test/log_files/zlog_02_categories.log";
+    const char fileCorrect[] = "test/log_correct/zlog_02_categories.log";
+
+    const int result = compare_logfiles2(fileToCompare, fileCorrect);
 
     const int expected = 0;
     ASSERT_EQUAL(expected, result);
