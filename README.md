@@ -1,2 +1,2 @@
 # Unified-logging-system
-[![Build Status](https://travis-ci.com/github/Matorinn/Unified-logging-system)](https://travis-ci.com/github/Matorinn/Unified-logging-system)
+[![Build Status](https://travis-ci.com/Matorinn/Unified-logging-system.svg?token=z2gV9zqgZegjdfgKSVKp&branch=main)](https://travis-ci.com/Matorinn/Unified-logging-system)
