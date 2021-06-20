@@ -1,0 +1,2 @@
+category = my_cat; hello, zlog - debug
+category = my-cat; hello, zlog - info

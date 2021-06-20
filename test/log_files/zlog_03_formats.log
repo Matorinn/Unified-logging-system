@@ -1,0 +1,17 @@
+!! category = my_cat; INFO info !!
+date = 2021-06-20 21:06:20 !! !!
+date = 2021-06-20 21:06:20.024 !! !!
+date = 2021-06-20 21:06:20.024841 !! !!
+only time = 21:06:20 !! !!
+PWD = /home/dmitry/Unified-logging-system/test/log_programs !! !!
+source file = zlog_03_formats.c !! !!
+!! source file = zlog_03_formats.c !!
+hostname = pc-ubuntu !! !!
+kernel thread id = 9403 !! !!
+!! line in code = 22 !!
+PID = 9403 !! !!
+!! function = main !!
+!! LEVEL = INFO !!
+!! level = info !!
+thread ID, 10 = 140294157952832 !! !!
+thread ID, 16 = c772e740 !! !!

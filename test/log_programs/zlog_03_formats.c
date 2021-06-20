@@ -19,7 +19,7 @@ int main(int argc, char **argv)
         return -2;
     }
 
-    zlog_info(zc, "hello, format");
+    zlog_info(zc, "!!");
 
     zlog_fini();
     return 0;
