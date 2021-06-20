@@ -1,14 +1,16 @@
 #переменная для подключения файлов:
-INCLUDE = -I thirdparty
+INCLUDE = -I ../thirdparty
 
-.PHONY: clean start all test 
+.PHONY: clean all test 
 
-test: test.exe 
+test: main_test.exe 
 
 #создание исполняемого файла:
-test.exe: test/main_test.o 
+main_test.exe: main_test.o 
 	gcc -o $@ $^
 #создание объектного файла:
-test/main_test.o: test/main_test.c 
+main_test.o: main_test.c 
 	gcc $(INCLUDE) -Wall -c -o $@ $<
 
+clean:
+	rm -rf *.o *.exe log_files/*.log

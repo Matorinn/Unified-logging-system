@@ -112,8 +112,8 @@ int compare_logfiles5(const char *filename1, /* 1-ый лог-файл */
 CTEST(simple_example_suite, usual)
 {
     /* файлы для тестирования: */
-    const char fileToCompare[] = "test/log_files/simple_example.txt";
-    const char fileCorrect[] = "test/log_correct/simple_example.txt";
+    const char fileToCompare[] = "log_files/simple_example.txt";
+    const char fileCorrect[] = "log_correct/simple_example.txt";
 
     /* результат тестирования: */
     const int result = compare_logfiles2(fileToCompare, fileCorrect);
@@ -125,8 +125,8 @@ CTEST(simple_example_suite, usual)
 
 CTEST(simple_example_suite, corrupted)
 {
-    const char fileToCompare[] = "test/log_files/simple_example_corrupted.txt";
-    const char fileCorrect[] = "test/log_correct/simple_example.txt";
+    const char fileToCompare[] = "log_files/simple_example_corrupted.txt";
+    const char fileCorrect[] = "log_correct/simple_example.txt";
 
     const int result = compare_logfiles2(fileToCompare, fileCorrect);
 
@@ -136,8 +136,8 @@ CTEST(simple_example_suite, corrupted)
 
 CTEST(zlog_suite, 01_simple)
 {
-    const char fileToCompare[] = "test/log_files/zlog_01_simple.log";
-    const char fileCorrect[] = "test/log_correct/zlog_01_simple.log";
+    const char fileToCompare[] = "log_files/zlog_01_simple.log";
+    const char fileCorrect[] = "log_correct/zlog_01_simple.log";
 
     const int result = compare_logfiles5(fileToCompare, fileCorrect, 256, '_', 4);
 
@@ -147,8 +147,8 @@ CTEST(zlog_suite, 01_simple)
 
 CTEST(zlog_suite, 02_categories)
 {
-    const char fileToCompare[] = "test/log_files/zlog_02_categories.log";
-    const char fileCorrect[] = "test/log_correct/zlog_02_categories.log";
+    const char fileToCompare[] = "log_files/zlog_02_categories.log";
+    const char fileCorrect[] = "log_correct/zlog_02_categories.log";
 
     const int result = compare_logfiles2(fileToCompare, fileCorrect);
 
@@ -158,8 +158,8 @@ CTEST(zlog_suite, 02_categories)
 
 CTEST(zlog_suite, 03_formats)
 {
-    const char fileToCompare[] = "test/log_files/zlog_03_formats.log";
-    const char fileCorrect[] = "test/log_correct/zlog_03_formats.log";
+    const char fileToCompare[] = "log_files/zlog_03_formats.log";
+    const char fileCorrect[] = "log_correct/zlog_03_formats.log";
 
     const int result = compare_logfiles5(fileToCompare, fileCorrect, 256, '!', 0);
 

@@ -2,7 +2,8 @@
 
 EXE = simple_example.exe \
 	zlog_01_simple.exe \
-	zlog_02_categories.exe
+	zlog_02_categories.exe \
+	zlog_03_formats.exe
 
 all: $(EXE)
 
@@ -16,4 +17,4 @@ all: $(EXE)
 # '%' означает одинаковые имена
 
 clean:
-	rm -rf *.o *.exe ../log_files/*.log
+	rm -rf *.o *.exe
