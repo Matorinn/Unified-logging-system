@@ -1,0 +1,6 @@
+rule 1; level = DEBUG; message = log debug
+rule 3; level = DEBUG; message = log debug
+rule 1; level = INFO; message = log info
+rule 2; level = INFO; message = log info
+rule 3; level = INFO; message = log info
+rule 1; level = NOTICE; message = log notice
