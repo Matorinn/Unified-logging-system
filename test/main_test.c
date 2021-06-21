@@ -166,3 +166,14 @@ CTEST(zlog_suite, 03_formats)
     const int expected = 0;
     ASSERT_EQUAL(expected, result);
 }
+
+CTEST(zlog_suite, 04_rules)
+{
+    const char fileToCompare[] = "log_files/zlog_04_rules.log";
+    const char fileCorrect[] = "log_correct/zlog_04_rules.log";
+
+    const int result = compare_logfiles2(fileToCompare, fileCorrect);
+
+    const int expected = 0;
+    ASSERT_EQUAL(expected, result);
+}

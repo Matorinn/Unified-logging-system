@@ -7,6 +7,7 @@ make
 ./zlog_01_simple.exe
 ./zlog_02_categories.exe
 ./zlog_03_formats.exe
+./zlog_04_rules.exe
 cd ..
 make
 ./main_test.exe
