@@ -6,7 +6,8 @@ EXE = simple_example.exe \
 	zlog_03_formats.exe \
 	zlog_04_rules.exe \
 	zlog_05_levels.exe \
-	zlog_06_levels.exe
+	zlog_06_levels.exe \
+	zlog_07_rotation.exe
 
 all: $(EXE)
 

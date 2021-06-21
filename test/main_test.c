@@ -199,3 +199,19 @@ CTEST(zlog_suite, 06_levels)
     const int expected = 0;
     ASSERT_EQUAL(expected, result);
 }
+
+CTEST(zlog_suite, 07_rotation)
+{
+    char fileToCompare[] = "log_files/zlog_07_rotation_(21).log";
+    char fileCorrect[] = "log_correct/zlog_07_rotation_(21).log";
+
+    int result = compare_logfiles2(fileToCompare, fileCorrect);
+
+    strcpy(fileToCompare, "log_files/zlog_07_rotation_(22).log");
+    strcpy(fileCorrect, "log_files/zlog_07_rotation_(22).log");
+
+    result += compare_logfiles2(fileToCompare, fileCorrect);
+
+    const int expected = 0;
+    ASSERT_EQUAL(expected, result);
+}
