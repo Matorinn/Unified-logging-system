@@ -1,0 +1,3 @@
+INFO   (my_cat:zlog_08_MDC.c:27) [] - 1.hello, zlog
+INFO   (my_cat:zlog_08_MDC.c:31) [Zhang] - 2.hello, zlog
+INFO   (my_cat:zlog_08_MDC.c:35) [Li] - 3.hello, zlog
