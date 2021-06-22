@@ -12,6 +12,7 @@ make
 ./zlog_06_levels.exe
 ./zlog_07_rotation.exe
 ./zlog_08_MDC.exe
+./zlog_09_multithread.exe
 cd ..
 make
 ./main_test.exe
