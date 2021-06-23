@@ -44,16 +44,40 @@ void writer_to_config_file(char *level, char *path_to_logfile)
     fclose(config_file);
 }
 
+struct input_data {
+    char *prog_name;
+    char *command_name;
+    char *parameter;
+    char *value;
+};
+
 int main(int argc, char *argv[])
 {
-    char *prog_name = argv[1];
-    char *command_name = argv[2];
-    char *parameter = argv[3];
-    char *value = argv[4];
+    if (argc < 3 || argc > 5) {
+        fprintf(stderr, "Wrong number of arguments\n");
+        return -1;
+    }
 
-    if (strcmp(command_name, "set") == 0) {
+    struct input_data data;
+
+    if (argc == 3) {
+        data.prog_name = argv[1];
+        data.command_name = argv[2];
+    } else if (argc == 4) {
+        data.prog_name = argv[1];
+        data.command_name = argv[2];
+        data.parameter = argv[3];
+    } else {
+        data.prog_name = argv[1];
+        data.command_name = argv[2];
+        data.parameter = argv[3];
+        data.value = argv[4];
+    }
+
+
+    if (strcmp(data.command_name, "set") == 0) {
         printf("type_set\n");
-        if (strcmp(parameter, "logfile") == 0) {
+        if (strcmp(data.parameter, "logfile") == 0) {
             printf("type_logfile\n");
 
             FILE *uls_cache;
@@ -61,89 +85,89 @@ int main(int argc, char *argv[])
                 printf("Cant create/open uls_cache file\n");
                 return -1;
             }
-            fprintf(uls_cache, "%s %s\n", prog_name, value);
+            fprintf(uls_cache, "%s %s\n", data.prog_name, data.value);
             fclose(uls_cache);
 
             FILE *config_file;
             //изменить тип открытия, для избежания дописи в старый файл
-            if ((config_file = fopen(value, "a")) == NULL) {
+            if ((config_file = fopen(data.value, "a")) == NULL) {
                 printf("Cant create/open config_file\n");
                 return -1;
             }
             fprintf(config_file, "[rules]\n");
             fclose(config_file);
 
-        } else if (strcmp(parameter, "debug") == 0) {
+        } else if (strcmp(data.parameter, "debug") == 0) {
             printf("level_debug\n");
 
             int checker;
             char *path_to_logfile;
-            checker = is_path_to_logfile_exist(prog_name, &path_to_logfile);
+            checker = is_path_to_logfile_exist(data.prog_name, &path_to_logfile);
             if (checker == 0) {
-                writer_to_config_file(parameter, path_to_logfile);
+                writer_to_config_file(data.parameter, path_to_logfile);
             } else {
                 printf("Type logfile path at first!\n");
                 return -1;
             }
 
 
-        } else if (strcmp(parameter, "warn") == 0) {
+        } else if (strcmp(data.parameter, "warn") == 0) {
             printf("level_warn\n");
 
             int checker;
             char *path_to_logfile;
-            checker = is_path_to_logfile_exist(prog_name, &path_to_logfile);
+            checker = is_path_to_logfile_exist(data.prog_name, &path_to_logfile);
             if (checker == 0) {
-                writer_to_config_file(parameter, path_to_logfile);
+                writer_to_config_file(data.parameter, path_to_logfile);
             } else {
                 printf("Type logfile path at first!\n");
                 return -1;
             }
 
-        } else if (strcmp(parameter, "error") == 0) {
+        } else if (strcmp(data.parameter, "error") == 0) {
             printf("level_error\n");
 
             int checker;
             char *path_to_logfile;
-            checker = is_path_to_logfile_exist(prog_name, &path_to_logfile);
+            checker = is_path_to_logfile_exist(data.prog_name, &path_to_logfile);
             if (checker == 0) {
-                writer_to_config_file(parameter, path_to_logfile);
+                writer_to_config_file(data.parameter, path_to_logfile);
             } else {
                 printf("Type logfile path at first!\n");
                 return -1;
             }
-        } else if (strcmp(parameter, "info") == 0) {
+        } else if (strcmp(data.parameter, "info") == 0) {
             printf("level_info\n");
 
             int checker;
             char *path_to_logfile;
-            checker = is_path_to_logfile_exist(prog_name, &path_to_logfile);
+            checker = is_path_to_logfile_exist(data.prog_name, &path_to_logfile);
             if (checker == 0) {
-                writer_to_config_file(parameter, path_to_logfile);
+                writer_to_config_file(data.parameter, path_to_logfile);
             } else {
                 printf("Type logfile path at first!\n");
                 return -1;
             }
-        } else if (strcmp(parameter, "notice") == 0) {
+        } else if (strcmp(data.parameter, "notice") == 0) {
             printf("level_notice\n");
 
             int checker;
             char *path_to_logfile;
-            checker = is_path_to_logfile_exist(prog_name, &path_to_logfile);
+            checker = is_path_to_logfile_exist(data.prog_name, &path_to_logfile);
             if (checker == 0) {
-                writer_to_config_file(parameter, path_to_logfile);
+                writer_to_config_file(data.parameter, path_to_logfile);
             } else {
                 printf("Type logfile path at first!\n");
                 return -1;
             }
-        } else if (strcmp(parameter, "fatal") == 0) {
+        } else if (strcmp(data.parameter, "fatal") == 0) {
             printf("level_fatal\n");
 
             int checker;
             char *path_to_logfile;
-            checker = is_path_to_logfile_exist(prog_name, &path_to_logfile);
+            checker = is_path_to_logfile_exist(data.prog_name, &path_to_logfile);
             if (checker == 0) {
-                writer_to_config_file(parameter, path_to_logfile);
+                writer_to_config_file(data.parameter, path_to_logfile);
             } else {
                 printf("Type logfile path at first!\n");
                 return -1;
@@ -152,7 +176,7 @@ int main(int argc, char *argv[])
             printf("Wrong input1\n");
             return -1;
         }
-    } else if (strcmp(command_name, "commit") == 0) {
+    } else if (strcmp(data.command_name, "commit") == 0) {
         printf("commit\n");
         //отправка сигнала о изменении конфига
     }
