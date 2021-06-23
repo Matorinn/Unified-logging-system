@@ -28,7 +28,7 @@ int signal_binding(struct sigaction *sa)
 	return 0;
 }
 /* запись в файл pid */
-void get_pid_in_file(void)
+void writing_pid_in_file(void)
 {
     FILE *file;
     int pid;
