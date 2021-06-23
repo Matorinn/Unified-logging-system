@@ -8,7 +8,7 @@
 int main(int argc, char **argv)
 {
     /* какой конфиг-файл использовать */
-    get_pid_in_file();
+    writing_pid_in_file();
     config_name = malloc(sizeof("example.conf"));
     strcpy(config_name, "example.conf");
     printf("config_name == %s\n", config_name);
