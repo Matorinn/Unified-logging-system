@@ -8,10 +8,10 @@
 int main(int argc, char **argv)
 {
     /* какой конфиг-файл использовать */
+    get_pid_in_file();
     config_name = malloc(sizeof("example.conf"));
     strcpy(config_name, "example.conf");
     printf("config_name == %s\n", config_name);
-
     /* связывание сигнала SIGHUP с нашим обработчиком */
     struct sigaction sa; /* структура для сигнала */
     signal_binding(&sa);
@@ -36,12 +36,13 @@ int main(int argc, char **argv)
         zlog_fini();
         return -2;
     }
-
+    
     /* вывод сообщений в течение 2 минут */
     for (int i = 0; i < 60; i++) {
         zlog_debug(zc, "%s%d", "hello ", i);
 		zlog_info(zc, "%s%d", "world ", i);
-		sleep(2);
+		sleep(2);  
+        send_signal();
     }
 
     zlog_fini();

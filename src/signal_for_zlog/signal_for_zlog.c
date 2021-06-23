@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h> /* для exit() */
 #include <string.h> /* для memset() */
+#include <unistd.h>
 
 /* 
  * обработчик сигнала SIGHUP, в котором меняется 
@@ -25,4 +26,48 @@ int signal_binding(struct sigaction *sa)
     sa->sa_flags = SA_SIGINFO;
     sigaction(SIGHUP, *&sa, NULL);
 	return 0;
+}
+/* запись в файл pid */
+void get_pid_in_file(void)
+{
+    FILE *file;
+    int pid;
+
+    char name[] = "PID.txt";
+    pid = getpid();
+    file = fopen(name, "wb");
+    if(file == NULL)
+    {
+        perror("Couldn't open the file");
+        exit(-1);
+    }
+    fprintf(file, "%d", pid);
+    fclose(file);
+}
+/* считывание из файла */
+void read_file_for_get_pid(pid_t *pid)
+{
+    FILE *file;
+    char name[] = "PID.txt";
+    
+    file = fopen(name, "r");
+    if(file == NULL)
+    {
+        perror("Couldn't open the file");
+        exit(EXIT_FAILURE);
+    }
+    fscanf(file, "%d", pid);        
+    fclose(file);
+}
+/* отправка сигнала */
+void send_signal()
+{
+    pid_t pid;
+
+    read_file_for_get_pid(&pid);
+    if((kill(pid, SIGHUP)) != 0)
+    {
+        perror("Error");
+        exit(EXIT_FAILURE);
+    }
 }
