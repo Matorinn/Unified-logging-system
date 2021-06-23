@@ -54,7 +54,6 @@ int UlsChangeConfFile(char *newValue, char *fileName, int option)
             strcat(sedRequest, newValue);
             strcat(sedRequest, sedRequestEnd);
         }
-        //printf("%s\n", sedRequest);
         if((pid = fork()) == 0) {
             if(execlp("sed", "sed", "-i", sedRequest, fileName, NULL) == -1)
                 return -1;
