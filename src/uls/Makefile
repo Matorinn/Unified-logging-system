@@ -6,4 +6,4 @@ uls:
 	gcc uls.c -o uls
 
 clean:
-	rm -rf uls uls_cache *.log
+	rm -rf uls uls_cache *.config
