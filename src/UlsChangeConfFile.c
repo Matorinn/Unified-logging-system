@@ -62,6 +62,8 @@ int UlsChangeConfFile(char *newValue, char *fileName, int option)
             return -1;
 
     }
+    else
+        return -1;
 
     waitpid(pid, &pid_status, 0);
 
