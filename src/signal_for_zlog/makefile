@@ -23,4 +23,4 @@ create_static_lib:
 #	gcc example.c -o example.exe -L. -lsignal_for_zlog -L/usr/local/lib -lzlog -lpthread
 
 clean:
-	rm -rf *.o *.exe
+	rm -rf *.o *.exe PID.txt
