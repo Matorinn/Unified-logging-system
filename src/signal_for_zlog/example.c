@@ -36,15 +36,14 @@ int main(int argc, char **argv)
         zlog_fini();
         return -2;
     }
-    
+
     /* вывод сообщений в течение 2 минут */
     for (int i = 0; i < 60; i++) {
         zlog_debug(zc, "%s%d", "hello ", i);
-		zlog_info(zc, "%s%d", "world ", i);
-		sleep(2);  
-        send_signal();
+        zlog_info(zc, "%s%d", "world ", i);
+        sleep(2);
     }
 
     zlog_fini();
-	return 0;
+    return 0;
 }
