@@ -9,25 +9,31 @@ struct input_data {
     char *value;
 };
 
-int is_path_to_configfile_exist(char *prog_name, char **path_to_configfile)
+int is_path_to_configfile_exist(char *prog_name, char **path_to_configfile, char **path_to_logfile)
 {
     FILE *uls_cache;
     if ((uls_cache = fopen("uls_cache", "r")) == NULL) {
-        printf("Type logfile path at first!\n");
-        exit(-1);
+        printf("Type configfile path at first!\n");
+        return -1;
     }
-    char uls_cache_parsed_line[128];
+    char uls_cache_parsed_line[256];
 
-    *path_to_configfile = malloc(sizeof(char) * 128);
-    while (fgets(uls_cache_parsed_line, 126, uls_cache)) {
+    *path_to_configfile = malloc(sizeof(char) * 256);
+    *path_to_logfile = malloc(sizeof(char) * 256);
+    while (fgets(uls_cache_parsed_line, 256, uls_cache)) {
 
         char *split_line;
         split_line = strtok(uls_cache_parsed_line, " ");
 
         while (split_line != NULL) {
             if (strcmp(prog_name, split_line) == 0) {
-                split_line = strtok(NULL, "\n");
+                split_line = strtok(NULL, " ");
                 strcpy(*path_to_configfile, split_line);
+                split_line = strtok(NULL, "\n");
+                if (split_line == NULL) {
+                    return -1;
+                }
+                strcpy(*path_to_logfile, split_line);
                 fclose(uls_cache);
                 return 0;
             } else {
@@ -39,7 +45,7 @@ int is_path_to_configfile_exist(char *prog_name, char **path_to_configfile)
     return -1;
 }
 
-void writer_to_config_file(char *level, char *path_to_configfile)
+void writer_to_config_file(char *level, char *path_to_logfile, char *path_to_configfile)
 {
     FILE *config_file;
 
@@ -47,22 +53,75 @@ void writer_to_config_file(char *level, char *path_to_configfile)
         printf("Configfile doesn't not exist\n");
         exit(-1);
     }
-    fprintf(config_file, "my_cat.%s \"%s\"\n", level, path_to_configfile);
+    fprintf(config_file, "my_cat.%s \"%s\"\n", level, path_to_logfile);
     fclose(config_file);
 }
 
 void set_level(struct input_data data)
 {
-    int checker;
+    int checker_config;
     char *path_to_configfile;
-    checker = is_path_to_configfile_exist(data.prog_name, &path_to_configfile);
-    if (checker == 0) {
-        writer_to_config_file(data.value, path_to_configfile);
+    char *path_to_logfile;
+    checker_config = is_path_to_configfile_exist(data.prog_name, &path_to_configfile, &path_to_logfile);
+    if (checker_config == 0) {
+        writer_to_config_file(data.value, path_to_logfile, path_to_configfile);
     } else {
-        printf("Type logfile path at first!\n");
+        printf("Type logfile and configfile path at first!\n");
         exit(-1);
     }
 }
+
+void create_logfile_path(struct input_data data)
+{
+
+    FILE *uls_cache;
+    if ((uls_cache = fopen("uls_cache", "r")) == NULL) {
+        printf("Input configfile path at first!\n");
+        exit(-1);
+    }
+    char uls_cache_parsed_line[256];
+    char *path_to_configfile = malloc(sizeof(char) * 256);
+    char *split_line = malloc(sizeof(char) * 256);
+
+    FILE *stpd;
+    if ((stpd = fopen("stpd", "a")) == NULL) {
+        printf("&&&&&");
+        exit(-1);
+    }
+
+    while (fgets(uls_cache_parsed_line, 256, uls_cache)) {
+
+        strcpy(split_line, uls_cache_parsed_line);
+        split_line = strtok(split_line, " ");
+
+        while (split_line != NULL) {
+            printf(".%s. .%s.\n", data.prog_name, split_line);
+            if (strcmp(data.prog_name, split_line) == 0) {
+                split_line = strtok(NULL, "\n");
+                if (split_line == NULL) {
+                    printf("Input configfile path at first!\n");
+                    exit(-1);
+                }
+                strcpy(path_to_configfile, split_line);
+                break;
+
+            } else {
+                fprintf(stpd, "%s", uls_cache_parsed_line);
+                break;
+            }
+        }
+    }
+
+    fclose(uls_cache);
+    fclose(stpd);
+    remove("uls_cache");
+    rename("stpd", "uls_cache");
+
+    uls_cache = fopen("uls_cache", "a");
+    fprintf(uls_cache, "%s %s %s\n", data.prog_name, path_to_configfile, data.value);
+    fclose(uls_cache);
+}
+
 
 int main(int argc, char *argv[])
 {
@@ -76,15 +135,19 @@ int main(int argc, char *argv[])
     if (argc == 3) {
         data.prog_name = argv[1];
         data.command_name = argv[2];
-    } else {
+    } else if (argc == 5) {
         data.prog_name = argv[1];
         data.command_name = argv[2];
         data.parameter = argv[3];
         data.value = argv[4];
+    } else {
+        fprintf(stderr, "Wrong number of arguments\n");
+        return -1;
     }
 
     if (strcmp(data.command_name, "set") == 0) {
         if (strcmp(data.parameter, "logfile") == 0) {
+            create_logfile_path(data);
 
         } else if (strcmp(data.parameter, "configfile") == 0) {
 
