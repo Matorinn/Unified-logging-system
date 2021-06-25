@@ -1,9 +1,9 @@
 .PHONY: clean all create_static_lib
 
-all: example.exe
+all: example
 
 # исполняемая программа:
-example.exe: example.o signal_for_zlog.o
+example: example.o signal_for_zlog.o
 	gcc -o $@ $^ -L/usr/local/lib -lzlog -lpthread
 
 # объектные файлы:
@@ -17,10 +17,10 @@ create_static_lib:
 	ar rc libsignal_for_zlog.a signal_for_zlog.o
 
 # линковать стат. библиотеку надо примерно так:
-#	gcc main.c -o main.exe -L. -lsignal_for_zlog
+#	gcc main.c -o main -L. -lsignal_for_zlog
 
 # для примера, как слинковать ее с example.c:
-#	gcc example.c -o example.exe -L. -lsignal_for_zlog -L/usr/local/lib -lzlog -lpthread
+#	gcc example.c -o example -L. -lsignal_for_zlog -L/usr/local/lib -lzlog -lpthread
 
 clean:
-	rm -rf *.o *.exe
+	rm -rf *.o example
